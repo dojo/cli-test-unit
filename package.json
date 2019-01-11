@@ -1,0 +1,73 @@
+{
+  "name": "@dojo/cli-test-unit",
+  "version": "4.0.0-pre",
+  "description": "",
+  "private": true,
+  "homepage": "https://dojo.io",
+  "license": "BSD-3-Clause",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dojo/cli-test-unit.git"
+  },
+  "scripts": {
+    "build:static:dev": "cpx \"{src,tests}/**/*.{d.ts,json,test}\" dist/dev",
+    "build:static:release": "cpx \"src/**/*.{d.ts,json}\" dist/release",
+    "build:cjs": "tsc",
+    "build": "npm-run-all -p build:** -s dojo-package",
+    "clean": "rimraf dist coverage",
+    "dojo-package": "dojo-package",
+    "dojo-release": "dojo-release",
+    "intern": "intern",
+    "lint:tslint": "tslint -p .",
+    "lint:prettier": "prettier -l \"{src,tests}/**/*.{ts,tsx}\"",
+    "lint": "run-p lint:*",
+    "precommit": "lint-staged",
+    "prettier": "prettier --write \"{src,tests}/**/*.{ts,tsx}\"",
+    "release": "run-s lint clean build \"dojo-release -- {@}\" --",
+    "test": "run-s lint build intern",
+    "uploadCoverage": "codecov --file=coverage/coverage.json",
+    "watch:ts": "dojo-tsc-watcher -p tsconfig.json -- dojo-package",
+    "watch": "run-p watch:ts \"build:static:** -- --watch\""
+  },
+  "devDependencies": {
+    "@dojo/cli": "^4.0.0",
+    "@dojo/scripts": "^3.1.0",
+    "@types/chalk": "2.2.0",
+    "@types/chokidar": "1.7.5",
+    "@types/cross-spawn": "6.0.0",
+    "@types/css-modules-require-hook": "4.0.1",
+    "@types/figures": "2.0.0",
+    "@types/fs-extra": "5.0.4",
+    "@types/jsdom": "11.0.4",
+    "@types/log-update": "2.0.0",
+    "@types/mockery": "^1.4.29",
+    "@types/ora": "3.0.0",
+    "@types/sinon": "~4.3.3",
+    "@types/yargs": "^8.0.2",
+    "cpx": "^1.5.0",
+    "mockery": "^1.7.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.15.3",
+    "rimraf": "^2.6.2",
+    "sinon": "~4.5.0",
+    "typescript": "~2.6.1",
+    "yargs": "^5.0.0"
+  },
+  "dependencies": {
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 4,
+    "useTabs": true,
+    "parser": "typescript",
+    "printWidth": 120,
+    "arrowParens": "always"
+  }
+}
