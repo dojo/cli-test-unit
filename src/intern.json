@@ -1,0 +1,24 @@
+{
+	"basePath": "../../../",
+	"environments": [
+		{ "browserName": "node" }
+	],
+	"reporters": [],
+	"node": {
+		"plugins": [
+			"@dojo/cli-test-unit/plugins/DojoReporter",
+			"@dojo/cli-test-unit/plugins/tsnode",
+			"@dojo/cli-test-unit/plugins/jsdom",
+			"@dojo/cli-test-unit/plugins/postcssRequire",
+			{
+				"script": "@dojo/cli-test-unit/plugins/registerExtension",
+				"options": {
+				  "extensions": [ ".gif", ".png" ,".jpg", ".jpeg", ".svg", ".eot", ".ttf", ".woff", ".woff2" ]
+				}
+			}
+		],
+		"suites": [
+			"./tests/unit/all.ts"
+		]
+	}
+}

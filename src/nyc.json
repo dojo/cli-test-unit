@@ -1,0 +1,56 @@
+{
+	"silent": false,
+	"all": true,
+	"excludeAfterRemap": true,
+	"eager": false,
+	"cache": true,
+	"babelCache": false,
+	"esModules": true,
+	"checkCoverage": false,
+	"sourceMap": true,
+	"perFile": false,
+	"produceSourceMap": false,
+	"compact": true,
+	"preserveComments": true,
+	"instrument": true,
+	"hookRequire": true,
+	"hookRunInContext": false,
+	"hookRunInThisContext": false,
+	"showProcessTree": false,
+	"clean": true,
+	"skipEmpty": false,
+	"skipFull": false,
+	"help": false,
+	"version": false,
+	"reporter": [
+		"lcov",
+		"text",
+		"html"
+	],
+	"extension": [
+		".js",
+		".jsx",
+		".ts",
+		".tsx"
+	],
+	"tempDir": "./output/coverage/.cache",
+	"include": [
+		"src/**/!(*.test.*).[tj]s?(x)"
+	],
+	"reportDir": "./output/coverage/report",
+	"exclude": [
+		"coverage/**",
+		"packages/*/test/**",
+		"test/**",
+		"test{,-*}.js",
+		"**/*{.,-}test.js",
+		"**/__tests__/**",
+		"output",
+		"**/node_modules/**"
+	],
+	"branches": 0,
+	"functions": 0,
+	"lines": 90,
+	"statements": 0,
+	"instrumenter": "nyc/lib/instrumenters/istanbul"
+}

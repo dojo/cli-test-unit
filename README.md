@@ -27,6 +27,14 @@ npm install @dojo/cli-test-unit
 dojo test unit
 ```
 
+### Watching Tests
+
+When running the unit tests in watch mode, the test command will re-run any time a file in your project's `src` or `test` directory changes.
+
+```bash
+dojo test unit --watch
+```
+
 ## How do I contribute?
 
 We appreciate your interest!  Please see the [Dojo Meta Repository](https://github.com/dojo/meta#readme) for the Contributing Guidelines.
@@ -56,4 +64,3 @@ To test locally in node run:
 [Dojo CLI]: https://github.com/dojo/cli
 [Intern]: https://theintern.io/
 [JS Foundation]: https://js.foundation/
->>>>>>> Initial repo skeleton

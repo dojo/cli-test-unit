@@ -1,1 +1,1 @@
-import './main';
+import './plugins/all';

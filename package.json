@@ -55,6 +55,22 @@
     "yargs": "^5.0.0"
   },
   "dependencies": {
+    "chalk": "2.4.2",
+    "chokidar": "2.0.4",
+    "cross-spawn": "6.0.5",
+    "css-modules-require-hook": "4.2.3",
+    "figures": "2.0.0",
+    "foreground-child": "^1.5.6",
+    "fs-extra": "7.0.1",
+    "intern": "~4.3.0",
+    "jsdom": "11.6.2",
+    "log-update": "2.3.0",
+    "nyc": "^13.1.0",
+    "ora": "3.0.0",
+    "slice-ansi": "2.0.0",
+    "spawn-wrap": "1.4.2",
+    "string-width": "3.0.0",
+    "ts-node": "7.0.1"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
