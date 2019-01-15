@@ -23,6 +23,7 @@ function runner() {
 	isRunning = true;
 	console.log(chalk.greenBright('Running unit tests...\n'));
 	emptyDirSync(path.join(process.cwd(), 'output', 'coverage', '.cache'));
+	emptyDirSync(path.join(process.cwd(), 'output', 'coverage', 'report'));
 	const nyc = new NYC();
 	nyc.createTempDirectory();
 	nyc.addAllFiles();

@@ -2,8 +2,8 @@ import Suite from 'intern/lib/Suite';
 import Test from 'intern/lib/Test';
 import ErrorFormatter from 'intern/lib/common/ErrorFormatter';
 import Executor from 'intern/lib/executors/Node';
-import { Listy } from '../Listy';
 import chalk from 'chalk';
+import * as logger from './logger';
 
 interface TestError {
 	name?: string;
@@ -14,16 +14,18 @@ interface TestError {
 
 const suiteTestErrorMap = new Map<string, TestError[]>();
 const errorFormatter = new ErrorFormatter(new Executor());
-let listy: Listy;
+
 let passCount = 0;
 let failCount = 0;
 let skipCount = 0;
 let suiteErrorCount = 0;
 
 intern.on('runEnd', () => {
-	listy && listy.done();
+	logger.done();
 	if (suiteTestErrorMap.size > 0) {
-		console.log(chalk.redBright('Errors\n'));
+		console.log(chalk.redBright(`
+Errors
+`));
 		[...suiteTestErrorMap.entries()].forEach(([key, value]) => {
 			console.log(`Suite: ${chalk.red(key.replace('node - ', ''))}`);
 			value.forEach((testError) => {
@@ -43,14 +45,13 @@ intern.on('runEnd', () => {
 	if (suiteErrorCount) {
 		summary += `, ${skipCount} suite errors`;
 	}
-	console.log(chalk.blueBright(summary));
+	console.log(`${chalk.blueBright(summary)}
+`);
 });
 
 intern.on('suiteStart', (suite: Suite) => {
 	if (suite.parent && !suite.parent.parent) {
-		listy && listy.done();
-		listy = new Listy([{ id: suite.id, text: suite.name }]);
-		listy.startSpinner(suite.id);
+		logger.start(suite.name || suite.id);
 	}
 });
 
@@ -71,22 +72,21 @@ intern.on('suiteEnd', ({ parent, id, skipped, numFailedTests, numPassedTests, er
 	if (!parent || parent.parent) {
 		return;
 	}
+	const suiteName = `${name || id}${logger.padding(name || id, 40)}`;
 	if (skipped) {
-		listy.addAfterText(id, '(skipped)');
-		listy.skipped(id);
+		logger.skipped(`${suiteName}(skipped)`);
 	} else if (error) {
 		suiteErrorCount++;
-		listy.addAfterText(id, 'Suite Error');
 		const testErrors = suiteTestErrorMap.get(id) || [];
 		testErrors.push({ suite: name!, error, type: 'suite' });
 		suiteTestErrorMap.set(id, testErrors);
-		listy.error(id);
+		logger.failed(`${suiteName}Suite Error`);
 	} else {
-		listy.addAfterText(id, `${numPassedTests} passed, ${numFailedTests} failed`);
+		const text = `${suiteName}${numPassedTests} passed, ${numFailedTests} failed`;
 		if (numFailedTests > 0) {
-			listy.error(id);
+			logger.failed(text);
 		} else {
-			listy.success(id);
+			logger.success(text);
 		}
 	}
 });
